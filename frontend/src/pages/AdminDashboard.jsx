@@ -95,13 +95,10 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
     setUploading(true);
     try {
       const result = await uploadAPI.uploadProjectImage(file);
-      // Use the API base URL to construct the full image URL
-      const API_URL =
-        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const baseURL = API_URL.replace("/api", ""); // Remove /api to get base URL
+      // Use relative path from API response
       setFormData({
         ...formData,
-        imageUrl: `${baseURL}${result.imageUrl}`,
+        imageUrl: result.imageUrl,
         imageFile: null,
       });
     } catch (error) {
@@ -453,7 +450,14 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
                     {formData.imageUrl && (
                       <div className="mt-2">
                         <img
-                          src={formData.imageUrl}
+                          src={
+                            formData.imageUrl.includes("localhost:5000")
+                              ? formData.imageUrl.replace(
+                                  /^https?:\/\/[^/]+/,
+                                  ""
+                                )
+                              : formData.imageUrl
+                          }
                           alt="Preview"
                           className="w-full max-w-xs h-32 object-cover rounded-lg border"
                         />
@@ -562,17 +566,20 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
             // Helper to get full image URL
             const getImageUrl = (imageUrl) => {
               if (!imageUrl) return null;
+              // Convert localhost:5000 URLs to relative paths (fixes CORS in development)
+              if (imageUrl.includes("localhost:5000")) {
+                return imageUrl.replace(/^https?:\/\/[^/]+/, "");
+              }
+              // Keep external URLs as-is
               if (
                 imageUrl.startsWith("http://") ||
                 imageUrl.startsWith("https://")
               ) {
                 return imageUrl;
               }
+              // Use relative path - works automatically with same domain
               if (imageUrl.startsWith("/uploads/")) {
-                const API_URL =
-                  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-                const baseURL = API_URL.replace("/api", "");
-                return `${baseURL}${imageUrl}`;
+                return imageUrl;
               }
               return imageUrl;
             };

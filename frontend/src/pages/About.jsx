@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   FiCode,
   FiDatabase,
@@ -594,288 +595,311 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-2">About Me</h1>
-            <p className="text-muted-foreground">
-              Learn more about my journey, skills, and experience
-            </p>
-          </div>
-
-          {/* Two Column Layout */}
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* Left Column */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Profile Picture */}
-              <Card
-                className={`${
-                  getSeasonalBackground(activeSeason).baseClasses
-                } ${getSeasonalBackground(activeSeason).gradientClasses}`}
-              >
-                {getSeasonalBackground(activeSeason).landscapeSvg}
-                <CardContent className="pt-6 pb-6 relative z-10">
-                  <div className="flex justify-center">
-                    <img
-                      src={profileImage}
-                      alt="Gian Daziel Pon"
-                      className="w-48 h-48 rounded-2xl object-cover border-4 border-background shadow-lg"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Stats */}
-              <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div>
-                      <div className="text-3xl font-bold text-primary mb-1">
-                        {projectCount}+
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        Projects
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-bold text-primary mb-1">
-                        3+
-                      </div>
-                      <div className="text-sm text-muted-foreground">Years</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Tech Stack */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FiCode className="h-5 w-5" />
-                    Tech Stack
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="text-sm font-semibold mb-2">Frontend</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {techStack.frontend.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 text-xs rounded-md bg-primary/10 text-primary border border-primary/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold mb-2">Backend</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {techStack.backend.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 text-xs rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold mb-2">
-                      DevOps & Cloud
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {techStack.devops.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 text-xs rounded-md bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+    <>
+      <Helmet>
+        <title>About - Gian Daziel Pon | AI Full-Stack Developer</title>
+        <meta
+          name="description"
+          content="Learn about Gian Daziel Pon, an AI Full-Stack Developer specializing in React, Node.js, MongoDB, and AWS AIOps. Available for freelance projects."
+        />
+        <meta
+          property="og:title"
+          content="About - Gian Daziel Pon | AI Full-Stack Developer"
+        />
+        <meta
+          property="og:description"
+          content="AI Full-Stack Developer with expertise in modern web technologies and cloud infrastructure."
+        />
+        <meta property="og:url" content="https://giandazielpon.online/about" />
+        <link rel="canonical" href="https://giandazielpon.online/about" />
+      </Helmet>
+      <div className="min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-4xl sm:text-5xl font-bold mb-2">About Me</h1>
+              <p className="text-muted-foreground">
+                Learn more about my journey, skills, and experience
+              </p>
             </div>
 
-            {/* Right Column */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* About Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FiBriefcase className="h-5 w-5" />
-                    About
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <p>
-                    I'm a passionate full-stack developer with a love for
-                    creating beautiful, functional, and user-friendly web
-                    applications. I enjoy turning complex problems into simple,
-                    elegant solutions.
-                  </p>
-                  <p>
-                    With expertise in both frontend and backend technologies, I
-                    bring a comprehensive approach to web development. I'm
-                    always learning new technologies and best practices to stay
-                    at the forefront of the industry.
-                  </p>
-                  <p>
-                    Currently, I'm expanding my expertise by learning{" "}
-                    <span className="font-semibold text-foreground">
-                      AWS AIOps
-                    </span>
-                    , exploring how artificial intelligence and machine learning
-                    can enhance cloud operations and infrastructure management.
-                  </p>
-                  <p>
-                    As a{" "}
-                    <span className="font-semibold text-foreground">
-                      freelancer
-                    </span>
-                    , I work with clients to deliver custom solutions that meet
-                    their unique needs. Whether it's building a new web
-                    application, improving existing systems, or providing
-                    technical consulting, I'm committed to delivering
-                    high-quality work.
-                  </p>
-                  <p>
-                    When I'm not coding, you can find me exploring new
-                    frameworks, contributing to open-source projects, or sharing
-                    knowledge with the developer community.
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Currently Learning */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FiBook className="h-5 w-5" />
-                    Currently Learning
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10">
-                      <FiCloud className="h-6 w-6 text-primary" />
+            {/* Two Column Layout */}
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Left Column */}
+              <div className="lg:col-span-1 space-y-6">
+                {/* Profile Picture */}
+                <Card
+                  className={`${
+                    getSeasonalBackground(activeSeason).baseClasses
+                  } ${getSeasonalBackground(activeSeason).gradientClasses}`}
+                >
+                  {getSeasonalBackground(activeSeason).landscapeSvg}
+                  <CardContent className="pt-6 pb-6 relative z-10">
+                    <div className="flex justify-center">
+                      <img
+                        src={profileImage}
+                        alt="Gian Daziel Pon"
+                        className="w-48 h-48 rounded-2xl object-cover border-4 border-background shadow-lg"
+                      />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold mb-2">AWS AIOps</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Currently learning AWS AIOps (Artificial Intelligence
-                        for IT Operations) to understand how AI and machine
-                        learning can be applied to automate and optimize cloud
-                        infrastructure management, monitoring, and operations.
-                        Exploring AWS services that leverage AI/ML for
-                        intelligent automation, predictive analytics, and
-                        enhanced observability.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
 
-              {/* Experience */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FiAward className="h-5 w-5" />
-                    Professional Experience
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    {experience.map((exp, index) => (
-                      <div
-                        key={index}
-                        className="relative pl-6 border-l-2 border-primary/30"
-                      >
-                        <div className="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-primary"></div>
-                        <div>
-                          <div className="text-xs font-semibold text-primary mb-1">
-                            {exp.year}
+                {/* Stats */}
+                <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+                  <CardContent className="pt-6">
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <div className="text-3xl font-bold text-primary mb-1">
+                          {projectCount}+
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Projects
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-3xl font-bold text-primary mb-1">
+                          3+
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Years
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Tech Stack */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FiCode className="h-5 w-5" />
+                      Tech Stack
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2">Frontend</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {techStack.frontend.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 text-xs rounded-md bg-primary/10 text-primary border border-primary/20"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2">Backend</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {techStack.backend.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 text-xs rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2">
+                        DevOps & Cloud
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {techStack.devops.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 text-xs rounded-md bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Right Column */}
+              <div className="lg:col-span-2 space-y-6">
+                {/* About Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FiBriefcase className="h-5 w-5" />
+                      About
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                    <p>
+                      I'm a passionate full-stack developer with a love for
+                      creating beautiful, functional, and user-friendly web
+                      applications. I enjoy turning complex problems into
+                      simple, elegant solutions.
+                    </p>
+                    <p>
+                      With expertise in both frontend and backend technologies,
+                      I bring a comprehensive approach to web development. I'm
+                      always learning new technologies and best practices to
+                      stay at the forefront of the industry.
+                    </p>
+                    <p>
+                      Currently, I'm expanding my expertise by learning{" "}
+                      <span className="font-semibold text-foreground">
+                        AWS AIOps
+                      </span>
+                      , exploring how artificial intelligence and machine
+                      learning can enhance cloud operations and infrastructure
+                      management.
+                    </p>
+                    <p>
+                      As a{" "}
+                      <span className="font-semibold text-foreground">
+                        freelancer
+                      </span>
+                      , I work with clients to deliver custom solutions that
+                      meet their unique needs. Whether it's building a new web
+                      application, improving existing systems, or providing
+                      technical consulting, I'm committed to delivering
+                      high-quality work.
+                    </p>
+                    <p>
+                      When I'm not coding, you can find me exploring new
+                      frameworks, contributing to open-source projects, or
+                      sharing knowledge with the developer community.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Currently Learning */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FiBook className="h-5 w-5" />
+                      Currently Learning
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10">
+                        <FiCloud className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold mb-2">AWS AIOps</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Currently learning AWS AIOps (Artificial Intelligence
+                          for IT Operations) to understand how AI and machine
+                          learning can be applied to automate and optimize cloud
+                          infrastructure management, monitoring, and operations.
+                          Exploring AWS services that leverage AI/ML for
+                          intelligent automation, predictive analytics, and
+                          enhanced observability.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Experience */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FiAward className="h-5 w-5" />
+                      Professional Experience
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {experience.map((exp, index) => (
+                        <div
+                          key={index}
+                          className="relative pl-6 border-l-2 border-primary/30"
+                        >
+                          <div className="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-primary"></div>
+                          <div>
+                            <div className="text-xs font-semibold text-primary mb-1">
+                              {exp.year}
+                            </div>
+                            <h4 className="font-bold mb-1">{exp.title}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {exp.description}
+                            </p>
                           </div>
-                          <h4 className="font-bold mb-1">{exp.title}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Skills Overview */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FiCode className="h-5 w-5" />
+                      Skills & Technologies
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10">
+                          <FiCode className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">Frontend</h4>
                           <p className="text-sm text-muted-foreground">
-                            {exp.description}
+                            React, JavaScript, TypeScript, Tailwind CSS,
+                            HTML/CSS
                           </p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Skills Overview */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FiCode className="h-5 w-5" />
-                    Skills & Technologies
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10">
-                        <FiCode className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10">
+                          <FiDatabase className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">Backend</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Node.js, Express, REST APIs, Authentication
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Frontend</h4>
-                        <p className="text-sm text-muted-foreground">
-                          React, JavaScript, TypeScript, Tailwind CSS, HTML/CSS
-                        </p>
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/10">
+                          <FiSmartphone className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">Mobile</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Responsive Design, Mobile-First Development
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10">
-                        <FiDatabase className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Backend</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Node.js, Express, REST APIs, Authentication
-                        </p>
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500/10">
+                          <FiCloud className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">Cloud</h4>
+                          <p className="text-sm text-muted-foreground">
+                            AWS, Deployment, Version Control, CI/CD, Learning
+                            AWS AIOps
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/10">
-                        <FiSmartphone className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Mobile</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Responsive Design, Mobile-First Development
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500/10">
-                        <FiCloud className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Cloud</h4>
-                        <p className="text-sm text-muted-foreground">
-                          AWS, Deployment, Version Control, CI/CD, Learning AWS
-                          AIOps
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

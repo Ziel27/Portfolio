@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   FiGithub,
   FiLinkedin,
@@ -588,13 +589,7 @@ const Home = () => {
   }, []);
 
   const techStack = {
-    frontend: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Tailwind CSS",
-      "HTML/CSS",
-    ],
+    frontend: ["JavaScript", "TypeScript", "React", "Tailwind CSS", "HTML/CSS"],
     backend: ["Node.js", "Express", "MongoDB", "REST APIs"],
     devops: ["AWS", "Git", "AWS AIOps"],
   };
@@ -617,12 +612,16 @@ const Home = () => {
   // Helper to get the correct image URL
   const getImageUrl = (path) => {
     if (!path) return "";
+    // Convert localhost:5000 URLs to relative paths (fixes CORS in development)
+    if (path.includes("localhost:5000")) {
+      return path.replace(/^https?:\/\/[^/]+/, "");
+    }
+    // Keep external URLs as-is
     if (path.startsWith("http://") || path.startsWith("https://")) {
       return path;
     }
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-    const baseURL = API_URL.replace("/api", "");
-    return `${baseURL}${path}`;
+    // Use relative path - works automatically with same domain
+    return path.startsWith("/") ? path : `/${path}`;
   };
 
   return (
@@ -842,12 +841,13 @@ const Home = () => {
                     together!
                   </p>
                   <div className="flex flex-col gap-2">
-                    <Button asChild variant="outline" size="sm">
-                      <Link to="/contact" className="flex items-center gap-2">
-                        <FiMail className="h-4 w-4" />
-                        <span>Send Email</span>
-                      </Link>
-                    </Button>
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"
+                    >
+                      <FiMail className="h-4 w-4" />
+                      <span>Send Email</span>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
