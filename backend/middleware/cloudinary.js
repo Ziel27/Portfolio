@@ -1,10 +1,13 @@
 import { v2 as cloudinary } from "cloudinary";
-import multerStorageCloudinary from "multer-storage-cloudinary";
 import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
 
-const { CloudinaryStorage } = multerStorageCloudinary;
+// Use createRequire to import CommonJS module properly
+// The module exports CloudinaryStorage as the default export
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const CloudinaryStorage = require("multer-storage-cloudinary");
 
 dotenv.config();
 
