@@ -18,6 +18,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.set("trust proxy", 1);
+
 // Connect to MongoDB
 connectDB();
 
@@ -95,8 +97,6 @@ const uploadLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-
-app.set("trust proxy", 1);
 
 // Apply general rate limiter to all routes, but skip theme endpoint
 app.use("/api/", (req, res, next) => {
