@@ -1,6 +1,6 @@
 import express from "express";
 import { authenticateToken } from "../middleware/auth.js";
-import { upload } from "../middleware/upload.js";
+import { upload } from "../middleware/cloudinary.js";
 
 const router = express.Router();
 
@@ -15,14 +15,28 @@ router.post(
         return res.status(400).json({ error: "No file uploaded" });
       }
 
-      const imageUrl = `/uploads/${req.file.filename}`;
+      // Cloudinary returns the secure_url in req.file
+      const imageUrl = req.file.path || req.file.secure_url || req.file.url;
+
+      if (!imageUrl) {
+        return res
+          .status(500)
+          .json({ error: "Failed to get image URL from Cloudinary" });
+      }
+
       res.json({
         imageUrl,
-        message: "Image uploaded successfully",
+        message: "Image uploaded successfully to Cloudinary",
       });
     } catch (error) {
-      console.error("Upload error:", error);
-      res.status(500).json({ error: "Failed to upload image" });
+      if (process.env.NODE_ENV === "development") {
+        console.error("Upload error:", error);
+      }
+      res.status(500).json({
+        error: "Failed to upload image",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 );

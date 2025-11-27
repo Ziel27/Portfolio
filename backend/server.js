@@ -108,7 +108,8 @@ app.use("/api/", (req, res, next) => {
   generalLimiter(req, res, next);
 });
 
-// Serve uploaded files
+// Serve uploaded files (legacy - for old local files, Cloudinary is now used for new uploads)
+// Keep this for backward compatibility with existing local files
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
 // Routes with specific rate limiters

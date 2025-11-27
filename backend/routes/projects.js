@@ -8,6 +8,7 @@ import {
   updateProject,
   deleteProject,
 } from "../utils/database.js";
+import { deleteImage } from "../middleware/cloudinary.js";
 
 const router = express.Router();
 
@@ -131,6 +132,28 @@ router.put(
       const { title, description, imageUrl, liveUrl, githubUrl, technologies } =
         req.body;
 
+      // Get old project to check if image changed
+      const oldProject = await getProjectById(req.params.id);
+
+      // If image URL changed and old image exists, delete old image from Cloudinary
+      if (
+        oldProject &&
+        oldProject.imageUrl &&
+        oldProject.imageUrl !== imageUrl?.trim()
+      ) {
+        try {
+          await deleteImage(oldProject.imageUrl);
+        } catch (imageError) {
+          // Log but don't fail the update if image deletion fails
+          if (process.env.NODE_ENV === "development") {
+            console.warn(
+              "Failed to delete old image from Cloudinary:",
+              imageError
+            );
+          }
+        }
+      }
+
       const project = await updateProject(req.params.id, {
         title: title.trim(),
         description: description.trim(),
@@ -161,6 +184,26 @@ router.delete("/:id", authenticateToken, validateObjectId, async (req, res) => {
       return res.status(400).json({ error: "Invalid project ID" });
     }
 
+    // Get project first to get image URL
+    const project = await getProjectById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    // Delete image from Cloudinary if it exists
+    if (project.imageUrl) {
+      try {
+        await deleteImage(project.imageUrl);
+      } catch (imageError) {
+        // Log but don't fail the deletion if image deletion fails
+        if (process.env.NODE_ENV === "development") {
+          console.warn("Failed to delete image from Cloudinary:", imageError);
+        }
+      }
+    }
+
+    // Delete project from database
     const deleted = await deleteProject(req.params.id);
 
     if (!deleted) {
