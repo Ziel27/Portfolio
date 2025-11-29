@@ -20,7 +20,13 @@ export const SeasonalThemeProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Determine the active season based on theme mode
-  const activeSeason = themeMode === "auto" ? currentSeason : themeMode;
+  // Return null if disabled to prevent seasonal effects
+  const activeSeason =
+    themeMode === "disabled"
+      ? null
+      : themeMode === "auto"
+      ? currentSeason
+      : themeMode;
 
   useEffect(() => {
     // Fetch theme preference from server

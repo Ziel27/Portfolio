@@ -304,28 +304,34 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
                   <p className="text-sm font-medium mb-2">Current Theme</p>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">
-                      {themeMode === "auto"
+                      {themeMode === "disabled"
+                        ? "🚫"
+                        : themeMode === "auto"
                         ? getSeasonEmoji(currentSeason)
                         : getSeasonEmoji(themeMode)}
                     </span>
-                    <div>
-                      <p className="font-semibold">
-                        {themeMode === "auto"
-                          ? `Auto (${getSeasonName(currentSeason)})`
-                          : getSeasonName(themeMode)}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {themeMode === "auto"
-                          ? "Theme changes automatically with seasons"
-                          : "Theme is manually set"}
-                      </p>
-                    </div>
+                  <div>
+                    <p className="font-semibold">
+                      {themeMode === "disabled"
+                        ? "Disabled"
+                        : themeMode === "auto"
+                        ? `Auto (${getSeasonName(currentSeason)})`
+                        : getSeasonName(themeMode)}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {themeMode === "disabled"
+                        ? "Seasonal themes are currently disabled"
+                        : themeMode === "auto"
+                        ? "Theme changes automatically with seasons"
+                        : "Theme is manually set"}
+                    </p>
+                  </div>
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium mb-3">Theme Mode</p>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2 mb-3">
                     <Button
                       onClick={() => updateThemeMode("auto")}
                       variant={themeMode === "auto" ? "default" : "outline"}
@@ -367,6 +373,19 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
                       🍂 Fall
                     </Button>
                   </div>
+                  <Button
+                    onClick={() => updateThemeMode("disabled")}
+                    variant={
+                      themeMode === "disabled"
+                        ? "destructive"
+                        : "outline"
+                    }
+                    size="sm"
+                    className="w-full"
+                  >
+                    <FiX className="mr-2 h-4 w-4" />
+                    {themeMode === "disabled" ? "Disabled" : "Disable Theme"}
+                  </Button>
                 </div>
               </div>
             </CardContent>
