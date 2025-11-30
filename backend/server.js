@@ -43,11 +43,62 @@ app.use(
 
 // CORS Configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL
-    ? process.env.FRONTEND_URL.split(",") // Support multiple origins
-    : process.env.NODE_ENV === "production"
-    ? false // Deny all in production if not configured
-    : "http://localhost:3000", // Allow localhost in development
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin && process.env.NODE_ENV === "development") {
+      return callback(null, true);
+    }
+
+    if (process.env.FRONTEND_URL) {
+      // Split and trim multiple origins
+      const allowedOrigins = process.env.FRONTEND_URL.split(",").map((url) =>
+        url.trim()
+      );
+
+      // Also allow www and non-www versions automatically
+      const originsWithVariants = [];
+      allowedOrigins.forEach((url) => {
+        originsWithVariants.push(url);
+        if (url.includes("://www.")) {
+          // Add non-www version
+          originsWithVariants.push(url.replace("://www.", "://"));
+        } else if (url.startsWith("https://") && !url.includes("www.")) {
+          // Add www version
+          originsWithVariants.push(url.replace("https://", "https://www."));
+        } else if (url.startsWith("http://") && !url.includes("www.")) {
+          // Add www version for http
+          originsWithVariants.push(url.replace("http://", "http://www."));
+        }
+      });
+
+      if (originsWithVariants.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS blocked origin: ${origin}`);
+        callback(
+          new Error(
+            `Not allowed by CORS. Allowed origins: ${originsWithVariants.join(
+              ", "
+            )}`
+          )
+        );
+      }
+    } else if (process.env.NODE_ENV === "production") {
+      // In production, deny all if not configured
+      callback(new Error("CORS not configured. Set FRONTEND_URL in .env"));
+    } else {
+      // Development: allow localhost
+      if (
+        !origin ||
+        origin === "http://localhost:3000" ||
+        origin === "http://localhost:5173"
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
 };
