@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "cloudinary";
 import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
@@ -11,8 +11,8 @@ const CloudinaryStorage = require("multer-storage-cloudinary");
 
 dotenv.config();
 
-// Configure Cloudinary
-cloudinary.config({
+// Configure Cloudinary (use v2 API)
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
