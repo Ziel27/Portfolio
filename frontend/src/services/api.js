@@ -4,7 +4,6 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const api = axios.create({
-  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -22,7 +21,10 @@ api.interceptors.request.use((config) => {
 // Auth API
 export const authAPI = {
   login: async (email, password) => {
-    const response = await api.post("/auth/login", { email, password });
+    const response = await api.post(`${API_URL}/auth/login`, {
+      email,
+      password,
+    });
     return response.data;
   },
 };
@@ -30,23 +32,23 @@ export const authAPI = {
 // Projects API
 export const projectsAPI = {
   getAll: async () => {
-    const response = await api.get("/projects");
+    const response = await api.get(`${API_URL}/projects`);
     return response.data;
   },
   getById: async (id) => {
-    const response = await api.get(`/projects/${id}`);
+    const response = await api.get(`${API_URL}/projects/${id}`);
     return response.data;
   },
   create: async (projectData) => {
-    const response = await api.post("/projects", projectData);
+    const response = await api.post(`${API_URL}/projects`, projectData);
     return response.data;
   },
   update: async (id, projectData) => {
-    const response = await api.put(`/projects/${id}`, projectData);
+    const response = await api.put(`${API_URL}/projects/${id}`, projectData);
     return response.data;
   },
   delete: async (id) => {
-    const response = await api.delete(`/projects/${id}`);
+    const response = await api.delete(`${API_URL}/projects/${id}`);
     return response.data;
   },
 };
@@ -56,11 +58,15 @@ export const uploadAPI = {
   uploadProjectImage: async (file) => {
     const formData = new FormData();
     formData.append("image", file);
-    const response = await api.post("/upload/project-image", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await api.post(
+      `${API_URL}/upload/project-image`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   },
 };
@@ -68,18 +74,18 @@ export const uploadAPI = {
 // User API
 export const userAPI = {
   getStatus: async () => {
-    const response = await api.get("/user/status");
+    const response = await api.get(`${API_URL}/user/status`);
     return response.data;
   },
   updateStatus: async (availableToWork, themeMode) => {
-    const response = await api.put("/user/status", {
+    const response = await api.put(`${API_URL}/user/status`, {
       availableToWork,
       themeMode,
     });
     return response.data;
   },
   getTheme: async () => {
-    const response = await api.get("/user/theme");
+    const response = await api.get(`${API_URL}/user/theme`);
     return response.data;
   },
 };
@@ -87,7 +93,7 @@ export const userAPI = {
 // Contact API
 export const contactAPI = {
   sendMessage: async (formData) => {
-    const response = await api.post("/contact", formData);
+    const response = await api.post(`${API_URL}/contact`, formData);
     return response.data;
   },
 };
